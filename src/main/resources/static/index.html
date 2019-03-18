@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>계에사아앙ㄴ기이ㅣㅣ!</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        td {
+            padding: 5px 10px;
+            text-align: center;
+        }
+        input {
+            text-align: right;
+            border: none;
+        }
+        input:focus {
+            outline: none;
+        }
+    </style>
+    <script
+            src="http://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<table border="1">
+    <tr>
+        <td colspan="4">
+            <input type="text" id="display">
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4">
+            <input type="text" id="result">
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3" onclick="reset()">AC</td>
+        <td onclick="add('/')">/</td>
+    </tr>
+    <tr>
+        <td onclick="add(7)">7</td>
+        <td onclick="add(8)">8</td>
+        <td onclick="add(9)">9</td>
+        <td onclick="add('*')">*</td>
+    </tr>
+    <tr>
+        <td onclick="add(4)">4</td>
+        <td onclick="add(5)">5</td>
+        <td onclick="add(6)">6</td>
+        <td onclick="add('-')">-</td>
+    </tr>
+    <tr>
+        <td onclick="add(1)">1</td>
+        <td onclick="add(2)">2</td>
+        <td onclick="add(3)">3</td>
+        <td onclick="add('+')">+</td>
+    </tr>
+    <tr>
+        <td colspan="2" onclick="add(0)">0</td>
+        <td onclick="add('.')">.</td>
+        <td onclick="calculate()">=</td>
+    </tr>
+</table>
+<script>
+    function add(char) { $('#display').val($('#display').val()+char) }
+    async function calculate() {
+        let formula = $('#display').val();
+        if (!formula || formula === '') return;
+        try{
+            let response = await $.get('/calculate/'+formula);
+            $('#result').val(JSON.stringify(parseInt(response)));
+        }catch (err) {
+            //Do Nothing
+        }
+    }
+    function reset() {
+        $('#display').val("");
+        $('#result').val("");
+    }
+</script>
+</body>
+</html>
